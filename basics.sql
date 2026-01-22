@@ -60,6 +60,18 @@ from employees
 where salary > (select avg(salary) as Avg_Sal
 from employees);
 
+-- Count the number of employees in each department
+select dept , count(*) as NoOfEmpl
+from employees
+group by dept;
+
+-- Find departments where the average salary is greater than 4500
+select dept
+from employees
+group by dept
+having avg(salary) > 4500;
+
+
 
 
 
