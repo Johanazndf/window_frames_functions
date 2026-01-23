@@ -1,9 +1,23 @@
-# window_frames_functions
-# SQL Window Functions – Employees Table
+# SQL Practice for Data Analysis
 
-## Overview
-Practice SQL window functions using a table: `employees`.  
-Covers - ranking, running totals, department averages, and previous/next row comparisons.
+This repository contains **SQL practice questions and solutions**
+covering core SQL topics required for **Data Analyst roles**.
+
+All queries are currently practiced using a **single `employees` table**
+to focus on **query logic and analytical thinking**
+without dataset complexity.
+
+## Table Used
+
+### employees
+
+| Column     | Description              |
+|-----------|--------------------------|
+| emp_id    | Employee ID              |
+| emp_name  | Employee name            |
+| dept      | Department               |
+| hire_date | Date of joining          |
+| salary    | Monthly salary           |
 
 ## Table: employees
 | emp_id | emp_name | dept | hire_date  | salary |
@@ -17,6 +31,10 @@ Covers - ranking, running totals, department averages, and previous/next row com
 | 7      | Dev      | FIN  | 2020-05-01 | 4500   |
 | 8      | Riya     | FIN  | 2021-04-01 | 4800   |
 
+## Why Only One Table?
 
-
+Using a single table allows:
+- Clear focus on **SQL logic**
+- Easier understanding of **window functions**
+- Interview-style problem solving without noise
 

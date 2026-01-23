@@ -71,8 +71,112 @@ from employees
 group by dept
 having avg(salary) > 4500;
 
+use db;
+-- Employees with salary > 5000
+select emp_id,salary
+from employees
+where salary > 5000;
 
+-- Employees from HR or IT
+select emp_id, dept
+from employees
+where dept='HR' or dept = 'IT';
 
+-- Employees whose name contains ‘sh’
+select emp_id, emp_name
+from employees
+where emp_name like '%sh%';
+
+-- Employees ordered by salary (ascending)
+select emp_id, emp_name, salary
+from employees 
+order by salary asc;
+
+-- Employees ordered by salary (descending)
+select emp_id, emp_name, salary
+from employees 
+order by salary desc;
+
+-- Employees ordered by department, then salary
+select emp_id, emp_name, dept, salary
+from employees
+order by dept asc, salary desc;
+
+-- Top 3 highest-paid employees
+select emp_id, emp_name, salary
+from employees
+order by salary desc limit 3;
+
+-- Total salary paid per department
+select dept,
+sum(salary) as Total_salary
+from employees
+group by dept;
+
+-- Number of employees per department
+select dept,
+count(*) as Total_Empl
+from employees
+group by dept;
+
+-- Max salary in each department
+select dept,
+max(salary) as Maximum_salary
+from employees
+group by dept;
+
+-- Department-wise employee count, ordered by count desc
+select dept,
+count(*) as Empl_Count
+from employees
+group by dept order by Empl_Count desc;
+
+-- Departments with average salary > 2000
+select dept,
+avg(salary) as Avg_Sal
+from employees
+group by dept having Avg_Sal > 2000;
+
+-- Departments where max salary > 4000
+select dept,
+max(salary) as Maximum_Salary
+from employees
+group by dept having Maximum_Salary > 4000;
+
+-- Write a query to show emp_id, dept, salary, 
+-- and average salary of the department using a window function
+select emp_id, emp_name, dept, salary,
+avg(salary) over (partition by dept) as Avg_Salary
+from employees;
+
+-- Show emp_id, dept, salary, and 
+-- rank employees by salary within each department, highest salary = rank 1
+select emp_id, dept, salary,
+dense_rank() over (partition by dept order by salary desc) as
+Ranking_Of_Salary from employees;
+
+-- Show only the highest-paid employee per department
+-- (If there are ties, return only one employee per department)
+select emp_id, salary, dept
+from (
+select emp_id, salary, dept,
+row_number() over (partition by dept order by salary desc) as rn
+from employees
+) e
+where rn = 1;
+
+-- For each employee, show: emp_id, dept, salary,previous employee’s salary in the 
+-- same department and next employee’s salary in the same department
+select emp_id, dept, salary,
+lag(salary,1) over (partition by dept order by salary) as Previous_Salary,
+lead(salary,1) over (partition by dept order by salary) as Next_Salary
+from employees;
+
+-- Show each employee’s salary and the difference from the previous employee’s salary in the same department
+select emp_id, salary,
+lag(salary) over (partition by dept) as Previou_Sal,
+salary - lag(salary) over (partition by dept) as difference
+from employees;
 
 
 
