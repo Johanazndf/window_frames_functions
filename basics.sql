@@ -188,5 +188,11 @@ select emp_id, dept, salary
 from ranked_employees
 where rn = 1;
 
-
-
+-- Top 3 salaries per department
+with top_sal as (
+select emp_id, dept,salary,
+row_number() over ( partition by dept order by salary desc)as ts
+from employees)
+select emp_id, dept, salary
+from top_sal
+where ts <= 3;
