@@ -17,7 +17,6 @@ INSERT INTO db.employees VALUES
 (8, 'Riya',  'FIN','2021-04-01', 4800);
 
 select * from db.employees;
-<<<<<<< HEAD
 
 -- Assign a row number to employees within each department ordered by salary descending
 select emp_id, emp_name,salary, dept, row_number() 
@@ -47,5 +46,30 @@ where salary > High_Prev_sal;
  sum(salary) over (partition by dept order by hire_date
  rows between unbounded preceding and current row)
  as dept_running_totalsal from db.employees;
-=======
->>>>>>> b57ffd2dace2459d5cb7e31a95a85384a1847055
+ 
+ -- Show each employee’s salary and the cumulative salary in their -- department up to the current row (ordered by hire_date) 
+ select emp_id, emp_name, salary, 
+ sum(salary) over (partition by dept order by hire_date 
+ rows between unbounded preceding and current row) as Cumulative_Salary from db.employees;
+ 
+ -- Show each employee’s salary and the sum of their salary plus the previous 
+ -- 2 employees in the same department, ordered by hire_date 
+ select emp_id, emp_name, dept, salary, 
+ sum(salary) over (partition by dept order by hire_date 
+ rows between 2 preceding and current row) as rolling_sum_salary from db.employees;
+ 
+ -- Show each employee’s salary and the sum of their salary and the next 
+ -- 2 employees in the same department, ordered by hire_date
+ select emp_id, emp_name, dept, salary, 
+ sum(salary) over (partition by dept order by hire_date 
+ rows between current row and 2 following) as forward_sum_salary from db.employees;
+ 
+ -- -- Show each employee’s salary, along with the average salary of the previous employee, 
+ -- current employee, and next employee in their department, ordered by hire_date 
+ select emp_id, emp_name, dept, salary, 
+ avg(salary) over (partition by dept order by hire_date 
+ rows between 1 preceding and 1 following) as rolling_avg_salary from db. employees;
+ 
+
+
+ 
