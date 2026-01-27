@@ -70,9 +70,12 @@ where salary > High_Prev_sal;
  avg(salary) over (partition by dept order by hire_date 
  rows between 1 preceding and 1 following) as rolling_avg_salary from db. employees;
 
+use db;
+
 -- assign unique sequence of employees by salary within each department
 select emp_id, dept, salary,
 row_number() over ( partition by dept order by salary) as Seq_Empl
 from employees;
+
 
  
